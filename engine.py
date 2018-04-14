@@ -1,12 +1,5 @@
 #Main Python 3.6 file
-
-class Files:
-    pass
-
-class Functions():
-    import Chain
-    import Verify
-    import Extract
+import Functions
 
 def MainMenu(): #Main menu. Likely to change. Here for clean code
     print ( "What do you want to do?" )
@@ -17,25 +10,19 @@ def MainMenu(): #Main menu. Likely to change. Here for clean code
 #Main loop starts
 while True:
     MainMenu()
-    choice = input ( "> " )[0] #We only need the first number
-    try:
-        choice = int ( choice )
-    except ValueError:
-        print ( "Your input needs to be a number" )
-        continue #restarts the loop
-
-    if choice < 1 and choice > 3:
-        print ( "Please select a number between 1 and 3" )
-        continue #restarts the loop
+    choice = Functions.getValidIntInput(Max=3, Min=1)
         
-    break
-    ##For debug, the break remains
-    if choice == 1:
-        Functions.Chain()
+    if  choice == 1:
+        import Chain
+        del Chain
+        
     elif choice == 2:
-        Functions.Verify()
+        import Verify
+        del Chain
+        
     elif choice == 3:
-        Functions.Extract()
+        import Extract
+        del Extract
 
 
 
