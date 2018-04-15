@@ -13,7 +13,7 @@ files = Functions.FindFiles(Config.ApplyChainToFolder)
 
 #Create the file.
 OutputFileNumber = 0
-OutputFileName = Config.OutputChainFolder + "/" + OutputFileNumber + ".bkch"
+OutputFileName = Config.OutputChainFolder + "/" + str(OutputFileNumber) + ".bkch"
 
 #TODO: Fix Windows compatibility.
 
@@ -32,13 +32,13 @@ allFileData = []
 
 for x in files:
     tempFile = open ( x, "rb" )
-    lengh = len(tempFile.read())
+    lengh = str(len(tempFile.read())) #Has to be string to be encoded
     tempFile.close()
     allFileData.append([x, lengh])
     
-Header = "<head>["+i+"]"
+Header = "<head>[" + str(i) + "]"
 
-for x in AllFileData:
+for x in allFileData:
     Header += "<file>[" + x[0] + "][" + x[1] + "]</file>"
 
 Header = "</head>"
