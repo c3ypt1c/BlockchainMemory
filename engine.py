@@ -14,7 +14,7 @@ while True:
     showMainMenu()
     choice = getValidIntInput(Max=5, Min=1)
         
-    if  choice == 1:
+    if   choice == 1:
         import Chain
         del Chain
         
