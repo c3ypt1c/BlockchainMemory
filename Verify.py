@@ -1,10 +1,9 @@
-import hashlib
+from hashlib import sha512
 import Config
 from Functions import FindFiles
-
-From = "Stuff to Blockchain"
 
 print ( "Building file tree..." )
 files = FindFiles(Config.ApplyChainToFolder)
 
-#TODO:Starting reading file contents and see if they match 
+#Full file structure:
+#<head>[order]<file>[filePath][lengh of data]</file></head>[DATA]<hash>sha512</hash>
