@@ -1,25 +1,30 @@
-import threading
-import itertools
-import hashlib
-import Functions
+##import threading
+from itertools import combinations_with_replacement as CombWithReplace
+from hashlib import sha512
+from Functions import FindFiles, getValidIntInput
 import Config
-import string
+from string import ascii_letters, digits
 from time import time
 
-import multiprocessing
-CoreCount = multiprocessing.cpu_count()
-del multiprocessing
+##import multiprocessing
+##CoreCount = multiprocessing.cpu_count()
+##del multiprocessing
 
 OutputFileNumber = 0
 OutputFileName = Config.OutputChainFolder + "/" + str(OutputFileNumber) + ".bkch"
-charactars = string.ascii_letters+string.digits
+charactars = ascii_letters+digits
+del ascii_letters, digits
 
-print ( "How many levels of difficulty do want?(1-5) (1)" )
-print ( "Beaware that higher number exponentionally slow down your computer" )
-difficulty = Functions.getValidIntInput(Max=5, Min=1, Default=1)
+print ( "How many levels of difficulty do want?(1-5) (2)" )
+print ( "Beaware that higher difficulty exponentionally slow down progress" )
+print ( "(n is the difficulty where 1/(16^n) is the probability of finding the" )
+print ( "salt)" )
+difficulty = getValidIntInput(Max=5, Min=1, Default=2)
+#Most computers should be able to complete 3 or 4 rather quickly,
+#the rest will depend on how the blockchain will work
 
 print ( "Building file tree... (",Config.ApplyChainToFolder,")", sep="" )
-files = Functions.FindFiles(Config.ApplyChainToFolder)
+files = FindFiles(Config.ApplyChainToFolder)
 
 #TODO: Fix Windows compatibility.
 
@@ -67,10 +72,10 @@ start = time()
 iterations = 0
 while not found:
     lengh += 1
-    for salt in itertools.combinations_with_replacement(charactars, lengh):
+    for salt in CombWithReplace(charactars, lengh):
         #The iterator will be replaced with data kind of iterator.
         iterations += 1
-        if hashlib.sha512(Data+"".join(salt).encode()).hexdigest()[0:difficulty].count("0") == difficulty:
+        if sha512(Data+"".join(salt).encode()).hexdigest()[0:difficulty].count("0") == difficulty:
             found = True
             break
 
@@ -78,7 +83,7 @@ end = time()
 trueSalt = "".join(salt) 
 
 print ( "Found salt: ", trueSalt )
-print ( "Which gives:", hashlib.sha512(Data+trueSalt.encode()).hexdigest() )
+print ( "Which gives:", sha512(Data+trueSalt.encode()).hexdigest() )
 print ( "It took:    ", round ( end - start ), "seconds")
 print ( "Hash/Second:", round ( iterations / ( end - start ) ) )
 
