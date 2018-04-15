@@ -51,8 +51,9 @@ def FindFiles(path, loud=False): #Recursive file traverser
     return files
 
 def getYesNo(Default=None, Inputs=["Y","N"]):
+    Inputs = [ x.lower() for x in Inputs ] #Allow lowercase
     while True:
-        choice = input ( Inputs[0]+"/"+Inputs[1]+"> ")
+        choice = input ( Inputs[0]+"/"+Inputs[1]+"> ").lower() #Make everything the same case
         
         if choice == "" and (not Default is None):
             return Default
