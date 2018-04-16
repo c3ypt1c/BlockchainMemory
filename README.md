@@ -22,3 +22,4 @@ The file is split into different parts:
 ## Current Goals:
 [ ] - Embed the difficulty into the file instead of guessing
 [ ] - Finish Verify.py
+[ ] - Try and optimize
