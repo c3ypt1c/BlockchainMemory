@@ -11,3 +11,14 @@ The file is split into different parts:
 - The "[filePath]" inside the "<file>" tag specifies in order which file's data will be stored and "[length of data]" tells you how much of that data is there.
 - The actual file data starts after the "</file></head>" tags. It continues until the sum of all file data specified in the head tags reaches length of the "[DATA]".
 - Inside the "<hash>" tag lies the salt to make a certain amount of 0's in the file after the sha512 hex digest. 
+
+## Milestones:
+[x] - Finish engine.py
+[x] - Finish Chains.py
+[ ] - Finish Verify.py
+[ ] - Finish Extract.py
+[x] - Finish ConfigChanger.py
+
+## Current Goals:
+[ ] - Embed the difficulty into the file instead of guessing
+[ ] - Finish Verify.py
