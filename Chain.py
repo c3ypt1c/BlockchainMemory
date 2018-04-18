@@ -16,12 +16,11 @@ charactars = ascii_letters+digits
 del ascii_letters, digits
 
 print ( "How many levels of difficulty do want?(1-5) (2)" )
-print ( "Beaware that higher difficulty exponentionally slow down progress" )
-print ( "(n is the difficulty where 1/(16^n) is the probability of finding the" )
-print ( "salt)" )
+print ( "Be aware that higher difficulty exponentially slow down progress" )
+print ( "(n is the difficulty where 1/(16^n) is the probability of finding the salt)" )
 difficulty = getValidIntInput(Max=5, Min=1, Default=2)
 #Most computers should be able to complete 1 or 2 rather quickly,
-#the rest will depend on how the blockchain will work
+#the rest will depend on how the block chain will work
 
 print ( "Building file tree... (",Config.ApplyChainToFolder,")", sep="" )
 files = FindFiles(Config.ApplyChainToFolder)
@@ -30,17 +29,14 @@ files = FindFiles(Config.ApplyChainToFolder)
 
 #TODO: Stack certain amount of data into a file.
 
-#Full file structure:
-#<head>[order]<file>[filePath][lengh of data]</file></head>[DATA]<hash>sha512</hash>
-
 allFileData = []
 
 for x in files:
     print ( "Adding:", x )
     tempFile = open ( x, "rb" )
-    lengh = str(len(tempFile.read())) #Has to be string to be encoded
+    length = str(len(tempFile.read())) #Has to be string to be encoded
     tempFile.close()
-    allFileData.append([x, lengh])
+    allFileData.append([x, length])
     
 Header = "<head>[" + str(OutputFileNumber) + "]"
 
@@ -53,7 +49,6 @@ Header += "</head>"
 
 OutputFile = open(OutputFileName, "wb" )
 OutputFile.write(Header.encode("UTF-8"))
-OutputFile.close()
 del Header, allFileData
 #take as little resources as possible.
 
@@ -74,11 +69,11 @@ WorkerData = [ None for x in range(CoreCount) ]
 Threads = []
 found = False
 ID = None
-lengh = 0
+length = 0
 
 class worker(threading.Thread):
     
-    def __init__(self, Data, difficulty, lengh, ID):
+    def __init__(self, Data, difficulty, length, ID):
         threading.Thread.__init__(self)
         
     def run(self):
@@ -88,7 +83,7 @@ class worker(threading.Thread):
         TimePassed = time()
         LastIterations = 0
 
-        for salt in CombWithReplace(charactars, lengh): #They know how long by their ID
+        for salt in CombWithReplace(charactars, length): #They know how long by their ID
             #The iterator will be replaced with byte kind of iterator maybe
             iterations += 1
             
@@ -114,7 +109,7 @@ class worker(threading.Thread):
                 
         WorkerDataLock.acquire()
         HasToExit = WorkerData[ID]
-        if not HasToExit: #Prevernts thread from overwriting kill signal
+        if not HasToExit: #Prevents thread from overwriting kill signal
             if found:
                 WorkerData[ID] = "".join(salt)
             else:
@@ -124,20 +119,19 @@ class worker(threading.Thread):
 
 
 while not found:
-    
     WorkerDataLock.acquire()
-    for x in WorkerData:
+    
+    for salt in WorkerData:
         
-        if x is None:
+        if salt is None:
             ID = WorkerData.index(None)
-            thread = worker(Data, difficulty, lengh, ID)
+            thread = worker(Data, difficulty, length, ID)
             WorkerData[ID] = False #So no true ;)
             thread.start()
             Threads.append(thread)
-            lengh += 1
+            length += 1
             
-        elif x:
-            salt = x
+        elif salt:
             found = True
             WorkerData = [ True for x in WorkerData ]
             break
@@ -146,16 +140,15 @@ while not found:
     sleep(0.5) #Check every half a second
 
 end = time()
-trueSalt = salt 
 
-print ( "Found salt: ", trueSalt )
-print ( "Which gives:", sha512(Data+trueSalt.encode()).hexdigest()[0:30] + "..." )
+print ( "Found salt: ", salt )
+digest = sha512(Data+salt.encode()).hexdigest()
+print ( "Which gives:", digest[:30] + "..." + digest[len(digest)-30:] )
 print ( "It took:    ", round ( end - start, 2 ), "seconds")
 ##print ( "Hash/Second:", round ( iterations / ( end - start ), 2 ) )
 
-OutputFile = open(OutputFileName, "wb" )
 OutputFile.write(Data)
-OutputFile.write(str("<salt>"+trueSalt+"</salt>)").encode())
+OutputFile.write(str("<salt>"+salt+"</salt><difficulty>"+str(difficulty)+"</difficulty>").encode())
 OutputFile.close()
 
 

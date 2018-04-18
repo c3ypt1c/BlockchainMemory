@@ -6,14 +6,15 @@ It's basically a BitCoin inspired way to store data. It guarantees that your dat
 
 ## File Architecture:
 The file is split into different parts:
-"""<head>[order]<file>[filePath][length of data]</file></head>[DATA]<hash>sha512</hash>"""
+"""<head>[order]<file>[filePath][length of data]</file></head>[DATA]<hash>sha512</hash><difficulty>[difficulty]</difficulty><"""
 - Inside the "<head>" is the "[order]" which specifies in which order the file should be extracted. (TO BE IMPLEMENTED)
 - The "[filePath]" inside the "<file>" tag specifies in order which file's data will be stored and "[length of data]" tells you how much of that data is there.
 - The actual file data starts after the "</file></head>" tags. It continues until the sum of all file data specified in the head tags reaches length of the "[DATA]".
 - Inside the "<hash>" tag lies the salt to make a certain amount of 0's in the file after the sha512 hex digest. 
+- Difficulty is added to the end of the file to reduce ambiguity when it comes to the difficulty used for hashing.
 
 ## Milestones:
-[x] - Finish engine.py
+[x] - Finish Engine.py
 [x] - Finish Chains.py
 [ ] - Finish Verify.py
 [ ] - Finish Extract.py
@@ -22,3 +23,4 @@ The file is split into different parts:
 ## Current Goals:
 [ ] - Embed the difficulty into the file instead of guessing
 [ ] - Finish Verify.py
+[ ] - Try and optimize
