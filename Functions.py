@@ -25,8 +25,15 @@ def getValidIntInput(Max=None, Min=None, Default=None ):
         
         return choice
 
-def FindFiles(path, loud=False): #Recursive file traverser
+def FindFiles(path, loud=False, bannedChars=False): #Recursive file traverser
     from os import scandir #Slight overhead while being in functions tab
+    
+    if not bannedChars and (not bannedChars is None):
+        from string import whitespace, punctuation
+        bannedChars = set ( whitespace + punctuation ) #Disallowed chars
+        bannedChars -= set ( ".-+=!\"£$%^&*()_,?" ) #Allowed chars
+        
+        
     files = []
     current = scandir(path)
     
@@ -46,7 +53,7 @@ def FindFiles(path, loud=False): #Recursive file traverser
             [ files.append(y) for y in FindFiles(currentPath) ]
             
         else:
-            if loud: print ( "Found?(skip):", currentPath )
+            if loud: print ( "Found?(skip):", currentPath )            
         
     return files
 

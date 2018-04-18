@@ -71,7 +71,7 @@ found = False
 ID = None
 length = 0
 
-class worker(threading.Thread):
+class worker(threading.Thread): #Will probably be moved to functions
     
     def __init__(self, Data, difficulty, length, ID):
         threading.Thread.__init__(self)
@@ -92,13 +92,11 @@ class worker(threading.Thread):
                 break
             
             if time() - TimePassed > 1:
-                #These will be used as reports later :)
-                ##print ( "Current salt:", "".join(salt) )
-                ##print ( "ΔIterations: ", iterations - LastIterations )
-                ##print ( "ΔIter/ΔTime: ", round((iterations - LastIterations) / 1, 2), "Iterations/Second" )
-                ##print ()
-                LastIterations = iterations
-                HasToExit = False
+##                #These will be used as reports later :)
+##                print ( "Current salt:", "".join(salt) )
+##                print ( "ΔIterations: ", iterations - LastIterations )
+##                print ( "ΔIter/ΔTime: ", round((iterations - LastIterations) / 1, 2), "Iterations/Second" )
+##                LastIterations = iterations
                 WorkerDataLock.acquire()
                 HasToExit = WorkerData[ID]
                 WorkerDataLock.release()
