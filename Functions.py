@@ -25,39 +25,54 @@ def getValidIntInput(Max=None, Min=None, Default=None ):
         
         return choice
 
-def FindFiles(path, loud=False, bannedChars=False): #Recursive file traverser
-    from os import scandir #Slight overhead while being in functions tab
-    
-    if not bannedChars and (not bannedChars is None):
-        from string import whitespace, punctuation
-        bannedChars = set ( whitespace + punctuation ) #Disallowed chars
-        bannedChars -= set ( ".-+=!\"£$%^&*()_,?" ) #Allowed chars
+def FindFiles(path, loud=False, bannedChars=False, allowedChars=False):                        
+    from os import scandir #Recursive file traverser (false means default)
+    #Slight overhead while being in functions tabal
+    acceptedVars = "<class 'set'>"
+
+    #Testing if the incoming varables are the correct type.
+    passed = type(bannedChars) == acceptedVars or bannedChars is False
+    #Wrong bannedChar Type
+    passed = passed and type(allowedChars) == acceptedVars or allowedChars is False
+    #Wrong acceptedVar Type
+
+    if passed:
         
-        
-    files = []
-    current = scandir(path)
-    
-    for x in current:
-        currentPath = x.path
-        
-        if x.is_file():
-            files.append(currentPath)
+        if not bannedChars:
+            from string import whitespace, punctuation
+            bannedChars = set ( whitespace + punctuation ) #Disallowed chars
             
-            if loud:
-                print ( "Found a file:", currentPath )
-            
-        elif x.is_dir():
-            if loud:
-                print ( "Found a dir: ", currentPath )
-                
-            [ files.append(y) for y in FindFiles(currentPath) ]
+        if allowedChars:
+            bannedChars -= allowedChars #Custom allowed chars
             
         else:
-            if loud: print ( "Found?(skip):", currentPath )            
+            bannedChars -= set ( ".-+=!\"£$%^&*()_,?" ) #Allowed chars by default
+            
+            
+        files = []
+        current = scandir(path)
         
-    return files
+        for x in current:
+            currentPath = x.path
+            
+            if x.is_file():
+                files.append(currentPath)
+                
+                if loud:
+                    print ( "Found a file:", currentPath )
+                
+            elif x.is_dir():
+                if loud:
+                    print ( "Found a dir: ", currentPath )
+                    
+                [ files.append(y) for y in FindFiles(currentPath, bannedChars=bannedChars, allowedChars=allowedChars) ]
+                
+            else:
+                if loud: print ( "Found?(skip):", currentPath )            
+            
+        return files
 
-def getYesNo(Default=None, Inputs=["Y","N"]):
+def getYesNo(Default=None, Inputs=["Y","N"]): #For getting yes or no answers
     Inputs = [ x.lower() for x in Inputs ] #Allow lowercase
     while True:
         choice = input ( Inputs[0]+"/"+Inputs[1]+"> ").lower() #Make everything the same case
