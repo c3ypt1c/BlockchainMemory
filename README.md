@@ -1,4 +1,4 @@
-# BlockchainMemory
+# Blockchain Memory
 It's correct because it exists.
 
 ## Basic Concept:
@@ -13,16 +13,17 @@ The file is split into different parts:
 - Inside the `<hash>` tag lies the salt to make a certain amount of 0's in the file after the sha512 hex digest. 
 - Difficulty is added to the end of the file to reduce ambiguity when it comes to the difficulty used for hashing.
 
+## Helping and Contributing:
+You may want to help this project grow with your own code and documentation. [Here](CONTRIBUTING.md) are the rules for contribution. If you want to post issues, bugs, program breaking things, please refere to our [Code of Conduct](CODE_OF_CONDUCT.md). If you want to use this program for your own work, [feel free to do so](LICENSE)!
+
 ## Milestones:
-- ~~Finish Engine.py~~
 - __Finish Chains.py (currently reworking)__
-- Make Reports inside chain work
+- Make Reports inside Chains.py work
 - Finish Verify.py
 - Finish Extract.py
 - ~~Finish ConfigChanger.py~~
 
 ## Current Goals:
-- ~~Embed the difficulty into the file instead of guessing~~
 - Rewrite Chains.py to block unwanted characters in a directory
 - Finish Verify.py
 - Try and optimize
