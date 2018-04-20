@@ -21,7 +21,6 @@ You may want to help this project grow with your own code and documentation. [He
 - Make Reports inside Chains.py work
 - Finish Verify.py
 - Finish Extract.py
-- ~~Finish ConfigChanger.py~~
 
 ## Current Goals:
 - Rewrite Chains.py to block unwanted characters in a directory
