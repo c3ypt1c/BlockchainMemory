@@ -1,11 +1,16 @@
 from itertools import combinations_with_replacement as CombWithReplace
-from Functions import FindFiles, getValidIntInput
+
+from Functions import inputs, FindFiles
+getValidIntInput = inputs.getValidIntInput
+del inputs
+
 from string import ascii_letters, digits
 from time import time, sleep
 from hashlib import sha512
 import Config
 
 import threading
+
 from multiprocessing import cpu_count
 CoreCount = cpu_count()
 del cpu_count
@@ -71,7 +76,7 @@ found = False
 ID = None
 length = 0
 
-class worker(threading.Thread):
+class worker(threading.Thread): #Will probably be moved to functions
     
     def __init__(self, Data, difficulty, length, ID):
         threading.Thread.__init__(self)
@@ -92,13 +97,11 @@ class worker(threading.Thread):
                 break
             
             if time() - TimePassed > 1:
-                #These will be used as reports later :)
-                ##print ( "Current salt:", "".join(salt) )
-                ##print ( "ΔIterations: ", iterations - LastIterations )
-                ##print ( "ΔIter/ΔTime: ", round((iterations - LastIterations) / 1, 2), "Iterations/Second" )
-                ##print ()
-                LastIterations = iterations
-                HasToExit = False
+##                #These will be used as reports later :)
+##                print ( "Current salt:", "".join(salt) )
+##                print ( "ΔIterations: ", iterations - LastIterations )
+##                print ( "ΔIter/ΔTime: ", round((iterations - LastIterations) / 1, 2), "Iterations/Second" )
+##                LastIterations = iterations
                 WorkerDataLock.acquire()
                 HasToExit = WorkerData[ID]
                 WorkerDataLock.release()
