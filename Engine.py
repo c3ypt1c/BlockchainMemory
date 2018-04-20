@@ -1,5 +1,5 @@
 #Main Python 3.6 file
-from Functions import getValidIntInput
+from Functions import inputs
 
 def showMainMenu(): #Main menu. Likely to change. Here for clean code
     print ( "What do you want to do?" )
@@ -12,7 +12,7 @@ def showMainMenu(): #Main menu. Likely to change. Here for clean code
 #Main loop starts
 while True:
     showMainMenu()
-    choice = getValidIntInput(Max=5, Min=1)
+    choice = inputs.getValidIntInput(Max=5, Min=1)
         
     if   choice == 1:
         import Chain
