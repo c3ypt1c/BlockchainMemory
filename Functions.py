@@ -68,21 +68,24 @@ class inputs:
             
             return choice
 
-    def getYesNo(Default=None, Inputs=["Y","N"]): #For getting yes or no answers
-        Inputs = [ x.lower() for x in Inputs ] #Allow lowercase
+    def getYesNo(Default=None, Yes="Y", No="N"):
+        #For getting yes or no answers
+        #Return True for yes and False for no.
+        Yes, No = str(Yes).lower(), str(No).lower() #Allow lowercase
+        
         while True:
-            choice = input ( Inputs[0]+"/"+Inputs[1]+"> ").lower() #Make everything the same case
+            choice = input ( Yes+"/"+No+"> ").lower() #Make everything the same case
             
             if choice == "" and (not Default is None):
                 return Default
 
-            if choice == Inputs[0]:
+            if choice == Yes:
                 return True
 
-            if choice == Inputs[1]:
+            if choice == No:
                 return False
 
-            print ( "Please enter", Inputs[0], "or", Inputs[1] )
+            print ( "Please enter", Yes, "or", No )
 
             
 
