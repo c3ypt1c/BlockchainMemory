@@ -1,8 +1,8 @@
 # BlockchainMemory
-Self verifying memory chain.
+It's correct because it exists.
 
 ## Basic Concept:
-It's basically a BitCoin inspired way to store data. It guarantees that your data is not changed at the start of the file. It uses a strong cryptographic hashing algorithm to check the data. Instead of using hashes, we use salts. 
+A BitCoin inspired way to store data. It guarantees that your data is not changed at the start of the file. It uses a strong cryptographic hashing algorithm to check the data. Instead of using hashes, we use salts to generate hashes with a certain desired characteristics. These characteristics are the 0's at the start of hex digested hash.
 
 ## File Architecture:
 The file is split into different parts:
@@ -15,12 +15,13 @@ The file is split into different parts:
 
 ## Milestones:
 [x] - Finish Engine.py
-[x] - Finish Chains.py
+[-] - Finish Chains.py (currently reworking)
 [ ] - Finish Verify.py
 [ ] - Finish Extract.py
 [x] - Finish ConfigChanger.py
 
 ## Current Goals:
-[ ] - Embed the difficulty into the file instead of guessing
+[x] - Embed the difficulty into the file instead of guessing
+[ ] - Rewrite Chains.py to block unwanted characters in a directory
 [ ] - Finish Verify.py
 [ ] - Try and optimize
