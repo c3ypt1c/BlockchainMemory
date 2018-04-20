@@ -1,5 +1,4 @@
-import string
-import Functions
+from Functions import inputs
 
 #Read the config file
 file = open ( "Config.py", "rb" )
@@ -25,9 +24,9 @@ while True:
             print ( i+1, x, sep=". " ) #Mind the offset
         i += 1
 
-    item = Functions.getValidIntInput(Max=i+1,Min=1)-1 #offsets cancel
+    item = inputs.getValidIntInput(Max=i+1,Min=1)-1 #offsets cancel
     #let the user change something ^
-    varableName = string.replace(fileData[item].split("=")[0], " ", "")
+    varableName = fileData[item].split("=")[0].replace(" ", "")
 
     print ( "What would you like to change", varableName, "to?" )
     value = input ( "> " ) #Input can by of almost any type.
@@ -37,7 +36,7 @@ while True:
     #Man, this is fun
 
     print ( "Anything else? (N)" )
-    if not Functions.getYesNo(Default=False): #Find if the user wants to change anything else
+    if not inputs.getYesNo(Default=False): #Find if the user wants to change anything else
         break
 
 file = open ( "Config.py", "wb") #Save changes

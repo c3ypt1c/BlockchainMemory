@@ -1,11 +1,16 @@
 from itertools import combinations_with_replacement as CombWithReplace
-from Functions import FindFiles, getValidIntInput
+
+from Functions import inputs, FindFiles
+getValidIntInput = inputs.getValidIntInput
+del inputs
+
 from string import ascii_letters, digits
 from time import time, sleep
 from hashlib import sha512
 import Config
 
 import threading
+
 from multiprocessing import cpu_count
 CoreCount = cpu_count()
 del cpu_count
